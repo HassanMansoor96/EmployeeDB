@@ -92,3 +92,18 @@ insert into OvertimeHours(overtime_hours)
 -- view table
 
 select * from Employees;
+
+-- LEFT JOIN query that will display the department name, job title, salary figure and overtime hours worked.
+
+select employees.first_name, employees.surname, employees.gender, employees.address, employees.email,
+	department.depart_name, roles.role, salaries.salary_pa, overtimehours.overtime_hours
+from Employees left join Department
+on employees.depart_id = department.depart_id
+left join Roles
+on employees.role_id = roles.role_id
+left join Salaries
+on employees.salary_id = salaries.salary_id
+left join overtimehours
+on employees.overtime_id = overtimehours.overtime_id;
+
+
