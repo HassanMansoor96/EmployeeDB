@@ -74,12 +74,12 @@ CREATE TABLE contact_seeking (
 SELECT * FROM contact_seeking;
 
 INSERT INTO profession (profession)
-VALUES ('Industrial Engineer'),
-('Financial manager'),
-('Aviator'),
-('Chartered Accountant'),
-('Software Engineer'),
-('Sales Consulter');
+VALUES ('Electrician'),
+ 	   ('Doctor'),
+       ('Developer'),
+       ('Dentist'),
+       ('Pilot'),
+       ('Engineer');
 
 INSERT INTO zip_codes (zip_code, city, province)
 VALUES (6008, 'Port Elizabeth', 'Eastern Cape'),
@@ -110,25 +110,25 @@ VALUES ('Single'),
 ('Complicated');
 
 INSERT INTO interests (interest)
-VALUES ('Rowing'),
+VALUES ('Golf'),
 ('Gaming'),
-('Singing'),
+('Dancing'),
 ('Reading'),
 ('Camping'),
 ('Fishing'),
 ('Hiking'),
 ('Partying'),
-('Running'),
+('Adventures'),
 ('Shopping'),
 ('Coding'),
 ('Painting'),
-('Cruising'),
+('Drawing'),
 ('Cooking'),
 ('Gardening');
 
 INSERT INTO seeking (seeking)
 VALUES ('Relationship'),
-('One Night Stand'),
+('No strings attached'),
 ('Friendship');
 
 INSERT INTO my_contacts (last_name, first_name, phone, email, gender, birthday, prof_id, zip_code, status_id)
@@ -148,8 +148,8 @@ VALUES ('Cole', 'Nicole', '0844853729', 'nicolecole@gmail.com', 'F', '2001-05-05
 ('Knight', 'Ben', '0825558574', 'benknight@gmail.com', 'M', '1991-11-22', 4, 2735, 6),
 ('Bevan', 'Lydia', '0832358342', 'lydiabevan@gmail.com', 'F', '2001-07-03', 6, 1200, 1);
 
-INSERT INTO contact_interest (contact_id, interest_id)
-VALUES (15, 7),
+insert into contact_interest (contact_id, interest_id)
+values (15, 7),
 (14, 4),
 (13, 5),
 (12, 1),
@@ -212,6 +212,7 @@ VALUES (15, 1),
 (2, 3),
 (1, 1);
 
+--join profeesion, zip_codes and status_id
 SELECT con.last_name, con.first_name, con.phone, con.email, con.gender, con.birthday,
 prof.profession, zip.zip_code, zip.city, zip.province, stat.status
 FROM my_contacts AS con LEFT JOIN profession AS prof
@@ -220,16 +221,19 @@ LEFT JOIN zip_codes AS zip
 ON con.zip_code = zip.zip_code
 LEFT JOIN status AS stat
 ON con.status_id = stat.status_id;
-
+		
+-- join Interests
 SELECT contact_id, intr.interest
 FROM contact_interest AS cont
 LEFT JOIN interests AS intr
 ON cont.interest_id = intr.interest_id;
-
+		
+-- join seeking
 SELECT contact_id, seek.seeking
 FROM contact_seeking AS cont LEFT JOIN seeking AS seek
 ON cont.seeking_id = seek.seeking_id;
 
+-- join all tables
 SELECT con.last_name, con.first_name, con.phone, con.email, con.gender, con.birthday,
 prof.profession, zip.zip_code, zip.city, zip.province, stat.status,
 intr.interest, seek.seeking
