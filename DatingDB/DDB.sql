@@ -1,3 +1,4 @@
+--create contact table
 CREATE TABLE my_contacts (
 	contact_id bigserial,
 	last_name varchar(25),
@@ -15,6 +16,7 @@ CREATE TABLE my_contacts (
 
 SELECT * FROM my_contacts;
 
+-- create table profession
 CREATE TABLE profession (
 	prof_id bigserial,
 	profession varchar(50),
@@ -24,6 +26,7 @@ CREATE TABLE profession (
 
 SELECT * FROM profession;
 
+-- create table zip_codes
 CREATE TABLE zip_codes (
 	zip_code bigserial CHECK (LENGTH (CAST(zip_code AS varchar(4))) <= 4),
 	city varchar(25),
@@ -34,6 +37,7 @@ CREATE TABLE zip_codes (
 
 SELECT * FROM zip_codes;
 
+-- create table status
 CREATE TABLE status (
 	status_id bigserial,
 	status varchar(15),
@@ -43,6 +47,7 @@ CREATE TABLE status (
 
 SELECT * FROM status;
 
+-- create table interests
 CREATE TABLE interests (
 	interest_id bigserial,
 	interest varchar(25),
@@ -51,6 +56,7 @@ CREATE TABLE interests (
 
 SELECT * FROM interests;
 
+-- create table contact_interests
 CREATE TABLE contact_interest (
 	contact_id bigserial REFERENCES my_contacts (contact_id),
 	interest_id bigserial REFERENCES interests (interest_id)
@@ -58,6 +64,7 @@ CREATE TABLE contact_interest (
 
 SELECT * FROM contact_interest;
 
+-- create table seeking
 CREATE TABLE seeking (
 	seeking_id bigserial,
 	seeking varchar(25),
@@ -66,6 +73,7 @@ CREATE TABLE seeking (
 
 SELECT * FROM seeking;
 
+-- create table contact_seeking
 CREATE TABLE contact_seeking (
 	contact_id bigserial REFERENCES my_contacts (contact_id),
 	seeking_id bigserial REFERENCES seeking (seeking_id)
@@ -73,6 +81,7 @@ CREATE TABLE contact_seeking (
 
 SELECT * FROM contact_seeking;
 
+-- insert data into profession table
 INSERT INTO profession (profession)
 VALUES ('Electrician'),
  	   ('Doctor'),
@@ -81,6 +90,7 @@ VALUES ('Electrician'),
        ('Pilot'),
        ('Engineer');
 
+-- insert data into zip_codes table
 INSERT INTO zip_codes (zip_code, city, province)
 VALUES (6008, 'Port Elizabeth', 'Eastern Cape'),
 (5605, 'Bhisho', 'Eastern Cape'),
@@ -101,6 +111,7 @@ VALUES (6008, 'Port Elizabeth', 'Eastern Cape'),
 (4000, 'Durban', 'Kwazulu-Natal'),
 (3875, 'Richards Bay', 'Kwazulu-Natal');
 
+-- insert data into status table
 INSERT INTO status (status)
 VALUES ('Single'),
 ('Taken'),
@@ -109,6 +120,7 @@ VALUES ('Single'),
 ('Engaged'),
 ('Complicated');
 
+-- insert data into interests table
 INSERT INTO interests (interest)
 VALUES ('Golf'),
 ('Gaming'),
@@ -126,11 +138,13 @@ VALUES ('Golf'),
 ('Cooking'),
 ('Gardening');
 
+-- insert data into seeking table
 INSERT INTO seeking (seeking)
 VALUES ('Relationship'),
 ('No strings attached'),
 ('Friendship');
 
+-- insert data into my_contacts table
 INSERT INTO my_contacts (last_name, first_name, phone, email, gender, birthday, prof_id, zip_code, status_id)
 VALUES ('Cole', 'Nicole', '0844853729', 'nicolecole@gmail.com', 'F', '2001-05-05', 2, 2093, 1),
 ('Reed', 'Charlie', '0835718872', 'charliereed@gmail.com', 'M', '1999-09-17', 3, 6008, 5),
@@ -148,6 +162,7 @@ VALUES ('Cole', 'Nicole', '0844853729', 'nicolecole@gmail.com', 'F', '2001-05-05
 ('Knight', 'Ben', '0825558574', 'benknight@gmail.com', 'M', '1991-11-22', 4, 2735, 6),
 ('Bevan', 'Lydia', '0832358342', 'lydiabevan@gmail.com', 'F', '2001-07-03', 6, 1200, 1);
 
+-- insert data into contact_interest table
 insert into contact_interest (contact_id, interest_id)
 values (15, 7),
 (14, 4),
@@ -195,6 +210,7 @@ values (15, 7),
 (2, 1),
 (1, 11);
 
+-- insert data into contact_seeking table
 INSERT INTO contact_seeking (contact_id, seeking_id)
 VALUES (15, 1),
 (14, 2),
@@ -212,26 +228,7 @@ VALUES (15, 1),
 (2, 3),
 (1, 1);
 
---join profeesion, zip_codes and status_id
-SELECT con.last_name, con.first_name, con.phone, con.email, con.gender, con.birthday,
-prof.profession, zip.zip_code, zip.city, zip.province, stat.status
-FROM my_contacts AS con LEFT JOIN profession AS prof
-ON con.prof_id = prof.prof_id
-LEFT JOIN zip_codes AS zip
-ON con.zip_code = zip.zip_code
-LEFT JOIN status AS stat
-ON con.status_id = stat.status_id;
-		
--- join Interests
-SELECT contact_id, intr.interest
-FROM contact_interest AS cont
-LEFT JOIN interests AS intr
-ON cont.interest_id = intr.interest_id;
-		
--- join seeking
-SELECT contact_id, seek.seeking
-FROM contact_seeking AS cont LEFT JOIN seeking AS seek
-ON cont.seeking_id = seek.seeking_id;
+
 
 -- join all tables
 SELECT con.last_name, con.first_name, con.phone, con.email, con.gender, con.birthday,
